@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suicidal Ideation Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+        .container {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border: none;
+        }
+        .card-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        .alert-info {
+            background-color: #e3f2fd;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .info-icon {
+            color: #667eea;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-heartbeat me-2"></i>Mental Health Assessment
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/suicidal_detection">Suicidal Detection</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/crisis-resources">Crisis Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutus">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contactus">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3><i class="fas fa-exclamation-triangle me-2"></i>Suicidal Ideation Detection</h3>
+                        <p class="mb-0">Analyze social media text for signs of suicidal thoughts</p>
+                    </div>
+                    <div class="card-body">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-exclamation-circle me-2"></i>{{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form action="/detect_suicidal" method="post">
+                            <div class="form-group">
+                                <label for="social_text" class="form-label">
+                                    <i class="fas fa-comment-dots info-icon"></i>Enter Social Media Text:
+                                </label>
+                                <textarea class="form-control" id="social_text" name="social_text" 
+                                        rows="6" placeholder="Paste the social media post, comment, or message here..." 
+                                        required></textarea>
+                                <small class="text-muted mt-2 d-block">
+                                    <i class="fas fa-info-circle me-1"></i>The text will be analyzed for keywords, patterns, and indicators of suicidal ideation.
+                                </small>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search me-2"></i>Analyze Text
+                                </button>
+                                <a href="/" class="btn btn-secondary ms-2">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Home
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-4">
+                    <h5><i class="fas fa-exclamation-circle me-2"></i>Important Notice:</h5>
+                    <p class="mb-2">This tool is for screening purposes only and should not replace professional mental health assessment.</p>
+                    <p class="mb-0"><strong>If you or someone you know is in immediate crisis:</strong></p>
+                    <ul class="mt-2">
+                        <li><strong>National Suicide Prevention Lifeline:</strong> 1-800-273-8255</li>
+                        <li><strong>Crisis Text Line:</strong> Text HOME to 741741</li>
+                        <li><strong>Emergency:</strong> Call 112 immediately</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

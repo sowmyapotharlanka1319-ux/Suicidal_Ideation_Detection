@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low Risk Assessment - Mental Health Assessment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+        .container {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .alert-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(56, 161, 105, 0.3);
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 20px;
+            border: none;
+        }
+        .card-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .original-text {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            margin-top: 20px;
+        }
+        .resource-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #48bb78;
+            transition: transform 0.2s;
+        }
+        .resource-item:hover {
+            transform: translateX(5px);
+        }
+        .highlight-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        .high-risk-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #ffebee;
+            border-left: 3px solid #ff4444;
+            border-radius: 3px;
+        }
+        .medium-risk-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #fff3e0;
+            border-left: 3px solid #ff8800;
+            border-radius: 3px;
+        }
+        .low-risk-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #fff9e6;
+            border-left: 3px solid #ffbb33;
+            border-radius: 3px;
+        }
+        .pattern-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #e1f5fe;
+            border-left: 3px solid #0277bd;
+            border-radius: 3px;
+            text-decoration: underline wavy #0277bd;
+        }
+        /* Tooltip styles for highlighted keywords */
+        .highlighted-keyword {
+            cursor: help;
+            transition: all 0.2s;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .highlighted-keyword:hover {
+            filter: brightness(0.95);
+            transform: scale(1.02);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pattern-match {
+            cursor: help;
+            transition: all 0.2s;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .pattern-match:hover {
+            filter: brightness(0.95);
+            transform: scale(1.02);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .badge-risk {
+            font-size: 1rem;
+            padding: 8px 15px;
+            border-radius: 50px;
+        }
+        .wellness-tip {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #48bb78;
+            margin-top: 20px;
+        }
+        .emotion-tag {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 2px;
+            border: 1px solid #a5d6a7;
+        }
+        .coping-strategy {
+            background: #f1f8e9;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #c5e1a5;
+        }
+        .coping-strategy i {
+            color: #48bb78;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-heartbeat me-2"></i>Mental Health Assessment
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/suicidal_detection">Suicidal Detection</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/crisis-resources">Crisis Resources</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="alert-success text-center">
+            <i class="fas fa-check-circle fa-4x mb-3"></i>
+            <h2>✅ Low Risk Assessment</h2>
+            <h4>No Immediate Suicidal Indicators Detected</h4>
+            <p class="mb-0">The analyzed text shows minimal signs of suicidal ideation.</p>
+            {% if result.special_note %}
+            <div class="mt-3 p-3 bg-success text-white rounded" style="background: rgba(255,255,255,0.2);">
+                <strong>{{ result.special_note }}</strong>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Analysis Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Risk Level:</strong> 
+                                    <span class="badge bg-success badge-risk">{{ result.risk_level }}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Confidence:</strong> 
+                                    <span class="badge bg-info text-dark badge-risk">{{ result.confidence }}%</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        {% if result.warning_signs %}
+                        <h6 class="mt-3"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Mild Concerns:</h6>
+                        <ul class="mb-4">
+                            {% for sign in result.warning_signs %}
+                            <li class="text-muted">{{ sign }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+                        {% if result.high_risk_keywords %}
+                        <h6 class="mt-4"><i class="fas fa-skull-crossbones text-danger me-2"></i>High-Risk Indicators Detected:</h6>
+                        <ul class="list-group mb-4">
+                            {% for keyword in result.high_risk_keywords %}
+                            <li class="list-group-item list-group-item-danger">
+                                <i class="fas fa-exclamation-circle me-2"></i>{{ keyword }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+                        {% if result.medium_risk_keywords %}
+                        <h6 class="mt-4"><i class="fas fa-heart-broken text-warning me-2"></i>Medium-Risk Indicators:</h6>
+                        <ul class="list-group mb-4">
+                            {% for keyword in result.medium_risk_keywords %}
+                            <li class="list-group-item list-group-item-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>{{ keyword }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+                        {% if result.low_risk_keywords %}
+                        <h6 class="mt-4"><i class="fas fa-heartbeat text-info me-2"></i>Low-Risk Keywords Detected:</h6>
+                        <div class="mb-4">
+                            {% for keyword in result.low_risk_keywords %}
+                            <span class="emotion-tag">
+                                <i class="fas fa-tag me-1"></i>{{ keyword }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        {% if result.distress_indicators %}
+                        <h6 class="mt-4"><i class="fas fa-heart text-success me-2"></i>Emotional Expressions:</h6>
+                        <div class="mb-4">
+                            {% for indicator in result.distress_indicators %}
+                            <span class="emotion-tag">
+                                <i class="fas fa-smile me-1"></i>{{ indicator }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Highlighted Text Section -->
+                        <div class="original-text">
+                            <h6><i class="fas fa-quote-left me-2"></i>Analyzed Text with Highlighted Keywords:</h6>
+                            <div class="p-3 bg-white rounded border" style="font-size: 1.1rem; line-height: 1.8;">
+                                {{ result.highlighted_text | safe }}
+                            </div>
+                            
+                            <!-- Legend for highlighting -->
+                            <div class="highlight-legend">
+                                <div class="legend-item">
+                                    <span class="high-risk-box"></span>
+                                    <span>High Risk Keywords</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="medium-risk-box"></span>
+                                    <span>Medium Risk Keywords</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="low-risk-box"></span>
+                                    <span>Low Risk Keywords</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="pattern-box"></span>
+                                    <span>Pattern Matches</span>
+                                </div>
+                            </div>
+                            
+                            <small class="text-muted d-block mt-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Hover over highlighted words to see which keywords/phrases were matched.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-info">
+                        <h5 class="mb-0"><i class="fas fa-heart me-2"></i>Recommendations & Self-Care</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for recommendation in result.recommendations %}
+                            <li class="list-group-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>{{ recommendation }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        
+                        <div class="wellness-tip">
+                            <h6><i class="fas fa-spa text-success me-2"></i>Wellness Tips:</h6>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <div class="coping-strategy">
+                                        <i class="fas fa-walking me-2"></i>
+                                        <strong>Physical Activity:</strong> Even a short walk can improve mood
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="coping-strategy">
+                                        <i class="fas fa-users me-2"></i>
+                                        <strong>Connect:</strong> Reach out to friends or family
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="coping-strategy">
+                                        <i class="fas fa-moon me-2"></i>
+                                        <strong>Rest:</strong> Prioritize good sleep hygiene
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="coping-strategy">
+                                        <i class="fas fa-pencil-alt me-2"></i>
+                                        <strong>Journal:</strong> Write down your thoughts and feelings
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header bg-success">
+                        <h5 class="mb-0"><i class="fas fa-phone-alt me-2"></i>Support Resources</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-3">Helplines (24/7):</h6>
+                        {% for helpline in resources.helplines[:3] %}
+                        <div class="resource-item">
+                            <strong>{{ helpline.name }}</strong>
+                            <p class="mb-1 text-primary fw-bold">{{ helpline.number }}</p>
+                            <small class="text-muted">{{ helpline.description }}</small>
+                        </div>
+                        {% endfor %}
+                        
+                        <hr>
+                        
+                        <h6 class="mt-3">Online Resources:</h6>
+                        {% for resource in resources.online_resources %}
+                        <div class="mt-2">
+                            <a href="{{ resource.url }}" target="_blank" class="text-decoration-none">
+                                <i class="fas fa-external-link-alt me-2 text-success"></i>{{ resource.name }}
+                            </a>
+                            <br>
+                            <small class="text-muted">{{ resource.description }}</small>
+                        </div>
+                        {% endfor %}
+                        
+                        <div class="mt-3 p-2 bg-light rounded">
+                            <small>
+                                <i class="fas fa-shield-alt me-1 text-success"></i>
+                                All resources are free and confidential.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="/suicidal_detection" class="btn btn-primary">
+                        <i class="fas fa-redo me-2"></i>Analyze Another Text
+                    </a>
+                    <a href="/" class="btn btn-outline-secondary mt-2">
+                        <i class="fas fa-home me-2"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-light mt-4 border-success">
+            <div class="row">
+                <div class="col-md-8">
+                    <h6><i class="fas fa-heart text-success me-2"></i>Remember:</h6>
+                    <ul class="mb-0">
+                        <li>Mental health is a journey - it's okay to have difficult days</li>
+                        <li>Small steps toward self-care can make a big difference</li>
+                        <li>You're not alone - millions of people experience similar feelings</li>
+                        <li>If feelings change or intensify, help is always available</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-seedling fa-3x text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add tooltip functionality for highlighted keywords
+        document.addEventListener('DOMContentLoaded', function() {
+            const highlights = document.querySelectorAll('.highlighted-keyword, .pattern-match');
+            highlights.forEach(element => {
+                element.addEventListener('mouseenter', function(e) {
+                    this.style.cursor = 'help';
+                });
+            });
+            
+            // Add smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
